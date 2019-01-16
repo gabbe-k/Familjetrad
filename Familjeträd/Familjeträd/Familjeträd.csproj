@@ -44,8 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generate.cs" />
-    <Compile Include="IdDataBase.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="PersonDB.cs" />
     <Compile Include="Personer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

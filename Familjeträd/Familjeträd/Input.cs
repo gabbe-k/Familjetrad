@@ -10,63 +10,85 @@ namespace Familjeträd
 {
     class Input
     {
-        public static Person RequestPerson(string request)
+        public static void RequestAction()
         {
-
             bool inputValid = false;
-            Person returnPerson;
 
             while (!inputValid)
             {
-                Console.WriteLine(request);
-                string name;
-                string surname;
-                int birthyear;
-                bool sex;
+                Console.WriteLine("Write input bro");
 
                 string input = Console.ReadLine();
 
-                if (string.IsNullOrEmpty(input) || Regex.Replace(input, "[^0-9A-z,]", "") != input || Convert.ToInt32(input) < 0)
+                if (input == "!help")
                 {
-                    Console.WriteLine("Please follow the syntax: name,surname,birthyear,sex");
+                    Console.Clear();
+                    Console.WriteLine("-------------------------------");
+                    Console.WriteLine("Commands:");
+                    Console.WriteLine("");
+                    Console.WriteLine("-------------------------------");
                 }
+
                 else
                 {
-                    string[] inputArr = input.Split(',');
 
-                    if (Validator.AllStringValid(inputArr))
+                    if (input.IndexOf(';') == input.Length - 1 && (!string.IsNullOrEmpty(input) || Regex.Replace(input, "[^0-9A-z.()]", "") == input))
                     {
-                        inputValid = true;
+                        string[] inputArr = input.Split('.');
 
-                        name = inputArr[0];
-                        surname = inputArr[1];
-                        birthyear = Convert.ToInt32(inputArr[2]);
-                        string sexString = inputArr[3].ToLower();
-
-                        if (sexString == "male")
+                        if (Regex.IsMatch(inputArr[0], "Add|Create"))
                         {
-                            sex = false;
+                            for (int i = 1; i < inputArr.Length; i++)
+                            {
+                                string validPrefix = "Children[(][0-9][)]|Siblings[(][0-9][)]|Person[(][0-9][)]|Parents[(][0-9][)]";
+
+                                if (Regex.IsMatch(inputArr[i], validPrefix))
+                                {
+                                    if ((i == inputArr.Length - 1 && Validator.HasKnownChars(inputArr[i], "0-9A-z();") || (i < inputArr.Length && Validator.HasKnownChars(inputArr[i], "0-9A-z()"))))
+                                    {
+                                        string tmp = inputArr[i].Substring(inputArr[i].IndexOf('(') + 1, inputArr[i].IndexOf(')') - 1 - inputArr[i].IndexOf('('));
+
+                                        if (Validator.HasKnownChars(tmp, "0-9A-z"))
+                                        {
+                                            Console.WriteLine(tmp + "is correct");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Unknown characters detected, write !help for help");
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Unknown characters detected, write !help for help");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please use a valid operation prefix: Parents([number]), Children([number]), Siblings([number]), Person([number]) etc");
+                                    Console.WriteLine("You used: " + inputArr[i]);
+                                }
+
+                            }
                         }
                         else
                         {
-                            sex = true;
+                            Console.WriteLine("Please start line with 'Add' or 'Create'");
                         }
 
-
-                        returnPerson = new Person(name, surname, birthyear, sex);
-
+                    }
+                    else if (!input.Contains(';'))
+                    {
+                        Console.WriteLine("Please end the line with a ;");
                     }
                     else
                     {
-                        Console.WriteLine("Please use A-z and 0-9 only");
+                        Console.WriteLine("Unknown characters detected, write !help for help");
                     }
-
+               
                 }
 
-
             }
-
-            return returnPerson;
 
         }
 

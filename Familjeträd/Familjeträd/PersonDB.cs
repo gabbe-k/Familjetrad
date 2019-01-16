@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
-    class IdDataBase
+    static class PersonDB
     {
-        private List<int> idList;
+        public static List<Person> personList = new List<Person>();
 
-        public void AddId(int[] idArr)
+        public static void Add(Person person)
         {
-            for (int i = 0; i < idArr.Length; i++)
-            {
-                idList.Add(idArr[i]);
-            }
+            personList.Add(person);
         }
 
         static void CheckParent(int[] parentId)

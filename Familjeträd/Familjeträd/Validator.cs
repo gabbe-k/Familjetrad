@@ -34,5 +34,22 @@ namespace Familjeträd
 
             return valid;
         }
+
+        public static bool HasKnownChars(string input, string knownChars)
+        {
+            if (Regex.Replace(input, "[^" + knownChars+ "]", "") == input)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static int HasAmount(char inputChar, string input)
+        {
+            return input.Count(f => f == inputChar);
+        }
     }
 }

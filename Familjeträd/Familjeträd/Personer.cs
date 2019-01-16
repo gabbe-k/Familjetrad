@@ -8,18 +8,21 @@ namespace Familjeträd
 {
     class Person
     {
-        private readonly string name;
-        private readonly string surname;
+        public readonly string name;
+        public readonly string surname;
         private int id;
-        private int birthyear;
-        private bool sex;
+        public readonly int birthyear;
+        public readonly bool sex;
         private int[] childId;
         private int[] parentId;
         private int partnerId;
 
         public Person(string name, string surname, int birthyear, bool sex)
         {
-
+            this.name = name;
+            this.surname = surname;
+            this.birthyear = birthyear;
+            this.sex = sex;
         }
 
         static void AssignChild()

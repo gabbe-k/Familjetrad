@@ -5,3 +5,10 @@ C:\Users\gabriel.kall\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj
 C:\Users\gabriel.kall\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj\Debug\Familjeträd.csproj.CoreCompileInputs.cache
 C:\Users\gabriel.kall\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj\Debug\Familjeträd.exe
 C:\Users\gabriel.kall\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj\Debug\Familjeträd.pdb
+C:\Users\gabbe\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\bin\Debug\Familjeträd.exe.config
+C:\Users\gabbe\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\bin\Debug\Familjeträd.exe
+C:\Users\gabbe\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\bin\Debug\Familjeträd.pdb
+C:\Users\gabbe\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj\Debug\Familjeträd.csprojAssemblyReference.cache
+C:\Users\gabbe\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj\Debug\Familjeträd.csproj.CoreCompileInputs.cache
+C:\Users\gabbe\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj\Debug\Familjeträd.exe
+C:\Users\gabbe\Documents\GitHub\Familjetrad\Familjeträd\Familjeträd\obj\Debug\Familjeträd.pdb
