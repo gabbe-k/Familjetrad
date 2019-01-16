@@ -15,15 +15,14 @@ namespace Familjeträd
 
             bool inputValid = false;
             Person returnPerson;
-            string name;
-            string surname;
-            int birthyear;
-            bool sex;
 
             while (!inputValid)
             {
                 Console.WriteLine(request);
-
+                string name;
+                string surname;
+                int birthyear;
+                bool sex;
 
                 string input = Console.ReadLine();
 
@@ -39,7 +38,23 @@ namespace Familjeträd
                     {
                         inputValid = true;
 
-                        
+                        name = inputArr[0];
+                        surname = inputArr[1];
+                        birthyear = Convert.ToInt32(inputArr[2]);
+                        string sexString = inputArr[3].ToLower();
+
+                        if (sexString == "male")
+                        {
+                            sex = false;
+                        }
+                        else
+                        {
+                            sex = true;
+                        }
+
+
+                        returnPerson = new Person(name, surname, birthyear, sex);
+
                     }
                     else
                     {
@@ -48,9 +63,8 @@ namespace Familjeträd
 
                 }
 
-            }
 
-            //returnPerson = new Person(name, surname, birthyear, sex);
+            }
 
             return returnPerson;
 
