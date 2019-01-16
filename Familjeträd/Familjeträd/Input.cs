@@ -16,7 +16,7 @@ namespace Familjeträd
 
             while (!inputValid)
             {
-                Console.WriteLine("Write input bro");
+                Console.WriteLine("Write a command or a chain of commands, separating them with '.' input '!help' help");
 
                 string input = Console.ReadLine();
 
@@ -40,9 +40,13 @@ namespace Familjeträd
                         {
                             for (int i = 1; i < inputArr.Length; i++)
                             {
-                                string validPrefix = "Children[(][0-9][)]|Siblings[(][0-9][)]|Person[(][0-9][)]|Parents[(][0-9][)]";
+                                string validPrefix = "Children[(][0-9][)]|Siblings[(][0-9][)]|Person[(][0-9][)]";
 
-                                if (Regex.IsMatch(inputArr[i], validPrefix))
+                                if (Regex.IsMatch(inputArr[i], "Parents|Partner"))
+                                {
+                                    Console.WriteLine("Command for add parent");
+                                }
+                                else if (Regex.IsMatch(inputArr[i], validPrefix))
                                 {
                                     if ((i == inputArr.Length - 1 && Validator.HasKnownChars(inputArr[i], "0-9A-z();") || (i < inputArr.Length && Validator.HasKnownChars(inputArr[i], "0-9A-z()"))))
                                     {
@@ -50,7 +54,10 @@ namespace Familjeträd
 
                                         if (Validator.HasKnownChars(tmp, "0-9A-z"))
                                         {
-                                            Console.WriteLine(tmp + "is correct");
+                                            if (Regex.Match(inputArr[i], validPrefix))
+                                            {
+
+                                            }
                                         }
                                         else
                                         {
@@ -62,10 +69,11 @@ namespace Familjeträd
                                     {
                                         Console.WriteLine("Unknown characters detected, write !help for help");
                                     }
+
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Please use a valid operation prefix: Parents([number]), Children([number]), Siblings([number]), Person([number]) etc");
+                                    Console.WriteLine("Please use a valid operation prefix: Parents, Partner, Children([number]), Siblings([number]), Person([number]) etc");
                                     Console.WriteLine("You used: " + inputArr[i]);
                                 }
 
