@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Runtime.Remoting.Lifetime;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -35,13 +36,39 @@ namespace Familjeträd
 
                     if (commandList == null)
                     {
-                        Console.WriteLine("Invalid result my man");
+                        
                     }
                     else
                     {
                         for (int i = 0; i < commandList.Count; i++)
                         {
-                            Console.WriteLine(commandList[i]);
+                            if (commandList[0] == "Add")
+                            {
+
+                            }
+                            else
+                            {
+                                if (commandList[i] == "PersonStruct")
+                                {
+                                    bool sex;
+
+                                    if (commandList[i + 3] == "Male")
+                                    {
+                                        sex = false;
+                                    }
+                                    else
+                                    {
+                                        sex = true;
+                                    }
+
+                                    PersonDB.Add(new Person(commandList[i], commandList[i + 1], Convert.ToInt32(commandList[i + 2]), sex));
+                                }
+                                else
+                                {
+
+                                }
+                            }
+
                         }
                     }
 
