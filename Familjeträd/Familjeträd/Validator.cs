@@ -35,6 +35,10 @@ namespace Familjeträd
             }
         }
 
+
+
+
+
         public static List<string> SyntaxValidator(string input)
         {
             //Removes whitespace
@@ -147,6 +151,10 @@ namespace Familjeträd
 
         }
 
+
+
+
+
         public static bool AllStringValid(string[] input)
         {
             bool valid = false;
@@ -173,6 +181,10 @@ namespace Familjeträd
             return valid;
         }
 
+
+
+
+
         public static bool HasKnownChars(string input, string knownChars)
         {
             if (Regex.Replace(input, "[^" + knownChars+ "]", "") == input)
@@ -185,9 +197,5 @@ namespace Familjeträd
             }
         }
 
-        public static int HasAmount(char inputChar, string input)
-        {
-            return input.Count(f => f == inputChar);
-        }
     }
 }

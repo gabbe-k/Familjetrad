@@ -8,25 +8,31 @@ namespace Familjeträd
 {
     class Person
     {
-        public readonly string name;
-        public readonly string surname;
+        public readonly string Name;
+        public readonly string Surname;
         private int id;
-        public readonly int birthyear;
-        public readonly bool sex;
+        public readonly int Birthyear;
+        public readonly bool Sex;
         private int[] childId;
         private int[] parentId;
         private int partnerId;
 
         public Person(string name, string surname, int birthyear, bool sex)
         {
-            this.name = name;
-            this.surname = surname;
-            this.birthyear = birthyear;
-            this.sex = sex;
+            Name = name;
+            Surname = surname;
+            Birthyear = birthyear;
+            Sex = sex;
         }
 
-        static void AssignChild(int count)
+        public void AssignChild(int count)
         {
+            for (int i = 0; i < count; i++)
+            {
+                Person child = Generate.GenChildPerson(("Input the details for the child of " + Name), Surname, Birthyear);
+
+                PersonDB.Add(child);
+            }
 
         }
 

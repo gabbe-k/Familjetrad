@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,59 +11,39 @@ namespace Familjeträd
 {
     class Generate
     {
-        public static Person GenPerson(string request, int parentAge = 0)
+        public static Person GenPerson(string request)
         {
 
-            bool inputValid = false;
+            bool inputGood = false;
             Person returnPerson = new Person("", "", 0, false);
 
-            while (!inputValid)
+            while (!inputGood)
             {
 
                 Console.WriteLine(request);
                 Console.WriteLine("Please follow the syntax: name,surname,birthyear,sex");
-                string name = "";
-                string surname = "";
-                int birthyear = 0;
-                bool sex = false;
 
                 string input = Console.ReadLine();
 
-                if (Validator.HasAmount(',', input) == 3 && (string.IsNullOrEmpty(input) || !Validator.HasKnownChars(input, "A-z0-9,")))
+                List<string> personList = Validator.PersonSyntaxValidator(input, "Person");
+
+                if (personList != null)
                 {
-                    continue;
+                    string name = personList[0];
+                    string surname = personList[1];
+                    int birthyear = Convert.ToInt32(personList[2]);
+                    bool sex;
+
+                    sex = personList[3] != "Male";
+
+                    returnPerson = new Person(name, surname, birthyear, sex);
+
+                    inputGood = true;
                 }
                 else
                 {
-                    string[] inputArr = input.Split(',');
-
-                    if (Validator.AllStringValid(inputArr))
-                    {
-
-                        name = inputArr[0];
-                        surname = inputArr[1];
-                        birthyear = Convert.ToInt32(inputArr[2]);
-                        string sexString = inputArr[3].ToLower();
-
-                        if (sexString == "male")
-                        {
-                            sex = false;
-                        }
-                        else
-                        {
-                            sex = true;
-                        }
-
-                        inputValid = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please use A-z and 0-9 only");
-                    }
-
+                    Console.WriteLine("Syntax error");
                 }
-
-                returnPerson = new Person(name, surname, birthyear, sex);
 
             }
 
@@ -69,5 +51,33 @@ namespace Familjeträd
 
         }
 
+
+
+
+        public static Person GenChildPerson(string request, string parentSurname, int parentBirthyear)
+        {
+
+            bool validChild = false;
+            Person returnChild = new Person("", "", 0, false);
+
+            while (!validChild)
+            {
+
+                Person tmpChild = GenPerson(request);
+
+                if ((parentBirthyear - tmpChild.Birthyear) < 18 && parentSurname == tmpChild.Surname )
+                {
+                    returnChild = tmpChild;
+
+                    validChild = true;
+                }
+
+                Console.WriteLine("Error: Birthyear needs to be atleast 18, and surname needs to match");
+
+            }
+
+            return returnChild;
+
+        }
     }
 }
