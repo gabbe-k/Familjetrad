@@ -25,12 +25,12 @@ namespace Familjeträd
             this.sex = sex;
         }
 
-        static void AssignChild()
+        static void AssignChild(int count)
         {
 
         }
 
-        static void AssignSibling()
+        static void AssignSibling(int count)
         {
 
         }

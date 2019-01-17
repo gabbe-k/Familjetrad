@@ -9,7 +9,7 @@ namespace Familjeträd
 {
     class Generate
     {
-        public static Person RequestPerson(string request)
+        public static Person GenPerson(string request, int parentAge = 0)
         {
 
             bool inputValid = false;
@@ -68,5 +68,6 @@ namespace Familjeträd
             return returnPerson;
 
         }
+
     }
 }
