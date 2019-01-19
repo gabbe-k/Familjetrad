@@ -25,5 +25,31 @@ namespace Familjeträd
 
         }
 
+        public static bool CheckPartner(int partnerId)
+        {
+            for (int i = 0; i < personList.Count; i++)
+            {
+                if (partnerId == personList[i].partnerId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool CheckDupe(int id)
+        {
+            for (int i = 0; i < personList.Count; i++)
+            {
+                if (id == personList[i].Id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }
