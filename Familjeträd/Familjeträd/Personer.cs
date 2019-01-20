@@ -84,7 +84,7 @@ namespace Familjeträd
                 PersonDB.Add(partner);
 
                 PartnerId = partner.Id;
-                Id = partner.PartnerId;
+                partner.PartnerId = Id; 
                 return partner;
             }
 

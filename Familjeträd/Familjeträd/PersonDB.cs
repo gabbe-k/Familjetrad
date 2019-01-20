@@ -59,8 +59,8 @@ namespace Familjeträd
                 Console.WriteLine(personList[i].Surname);
                 Console.WriteLine(personList[i].Birthyear);
                 Console.WriteLine(personList[i].Sex);
-                Console.WriteLine(personList[i].Id);
-                Console.WriteLine(personList[i].PartnerId);
+                Console.WriteLine(personList[i].Id + " THIS IS ID");
+                Console.WriteLine(personList[i].PartnerId + " THIS IS PARTNER ID");
             }
         }
 
