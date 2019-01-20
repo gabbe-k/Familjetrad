@@ -38,10 +38,6 @@ namespace Familjeträd
 
                     returnPerson = new Person(name, surname, birthyear, sex);
 
-                    Random rnd = new Random();
-
-                    returnPerson.Id = rnd.Next(0, 9999);
-
                     inputGood = true;
                 }
                 else
