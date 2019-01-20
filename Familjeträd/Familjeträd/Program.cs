@@ -12,18 +12,7 @@ namespace Familjeträd
         {
             //Create Initial Person
 
-
-            Person gab = new Person("gab", "kal", 2000, false);
-
-            gab.AssignChild(2);
-
-            for (int i = 0; i < PersonDB.personList.Count; i++)
-            {
-                Console.WriteLine(PersonDB.personList[i].Name);
-                Console.WriteLine(PersonDB.personList[i].Surname);
-                Console.WriteLine(PersonDB.personList[i].Birthyear);
-                Console.WriteLine(PersonDB.personList[i].Sex);
-            }
+            Input.RequestAction();
 
             //Add.Children(2)
             //Add.Parents

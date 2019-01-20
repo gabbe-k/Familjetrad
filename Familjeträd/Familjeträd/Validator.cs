@@ -91,7 +91,7 @@ namespace Familjeträd
                                 }
                                 else if(Validator.HasKnownChars(tmp, "[A-z]+[,][A-z]+[,][0-9]+[,](Male|Female)") && inputArr[0] == "Create")
                                 {
-                                    outList.AddRange(PersonSyntaxValidator(tmp ,"Person"));
+                                    outList.AddRange(PersonSyntaxValidator(tmp ,"PersonStruct"));
                                 }
                                 else
                                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,12 +9,16 @@ namespace Familjeträd
 {
     class Compiler
     {
-        public static List<int> CompileRequest(List<string> commandList)
+        public static void CompileRequest(List<string> commandList)
         {
 
             //system där alla platser i listan = 0 om inte högre, där varje plats representerar en call av en funktion
+            List<Person> tmpPersonList = new List<Person>();
+            bool partner = false;
+
             for (int i = 0; i < commandList.Count; i++)
             {
+
                 if (commandList[0] == "Add")
                 {
 
@@ -24,7 +29,7 @@ namespace Familjeträd
                     {
                         bool sex;
 
-                        if (commandList[i + 3] == "Male")
+                        if (commandList[i + 4] == "Male")
                         {
                             sex = false;
                         }
@@ -33,12 +38,54 @@ namespace Familjeträd
                             sex = true;
                         }
 
-                        PersonDB.Add(new Person(commandList[i], commandList[i + 1], Convert.ToInt32(commandList[i + 2]), sex));
-                    }
-                    else
-                    {
+                        Person tmpPerson = new Person(commandList[i+1], commandList[i + 2], Convert.ToInt32(commandList[i + 3]), sex);
 
+                        tmpPersonList.Add(tmpPerson);
+                        PersonDB.Add(tmpPerson);
                     }
+                    else if(commandList[i].Contains("Person"))
+                    {
+                        int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
+
+                        for (int j = 0; j < tmpCount; j++)
+                        {
+                            Person tmpPerson =  Generate.GenPerson("Type in the details for person #" + j);
+                            tmpPersonList.Add(tmpPerson);
+                            PersonDB.Add(tmpPerson);
+                        }
+                    }
+
+                    if(commandList[i].Contains("Siblings"))
+                    {
+                        int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
+
+                        Console.WriteLine(tmpPersonList.Count);
+
+                        for (int j = 0; j < tmpPersonList.Count; j++)
+                        {
+                            Console.WriteLine("IN HER");
+                            tmpPersonList[j].AssignSibling(tmpCount);
+                        }
+                    }
+
+                    if (commandList[i].Contains("Partner"))
+                    {
+                        tmpPersonList[0].AssignPartner(tmpPersonList[0], false);
+
+                        partner = true;
+                    }
+
+                    if (commandList[i].Contains("Children") && partner == true)
+                    {
+                        int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
+
+                        for (int j = 0; j < tmpPersonList.Count; j++)
+                        {
+                            tmpPersonList[j].AssignChild(tmpCount);
+                        }
+                    }
+
+
                 }
 
             }

@@ -13,7 +13,6 @@ namespace Familjeträd
     {
         public static Person GenPerson(string request)
         {
-
             bool inputGood = false;
             Person returnPerson = new Person("", "", 0, false);
 
@@ -29,14 +28,19 @@ namespace Familjeträd
 
                 if (personList != null)
                 {
-                    string name = personList[0];
-                    string surname = personList[1];
-                    int birthyear = Convert.ToInt32(personList[2]);
+                    Console.WriteLine(personList[0]);
+                    string name = personList[1];
+                    string surname = personList[2];
+                    int birthyear = Convert.ToInt32(personList[3]);
                     bool sex;
 
-                    sex = personList[3] != "Male";
+                    sex = personList[4] != "Male";
 
                     returnPerson = new Person(name, surname, birthyear, sex);
+
+                    Random rnd = new Random();
+
+                    returnPerson.Id = rnd.Next(0, 9999);
 
                     inputGood = true;
                 }
@@ -54,9 +58,9 @@ namespace Familjeträd
 
 
 
-        public static Person GenChildPerson(string request, string parentSurname, int parentBirthyear)
+        public static Person GenChildPerson(string request, string parentSurname, int parentBirthyear, string parentName)
         {
-
+            Console.WriteLine("Creating sibling of " + parentName);
             bool validChild = false;
             Person returnChild = null;
 
@@ -91,9 +95,9 @@ namespace Familjeträd
 
 
 
-        public static Person GenSiblingPerson(string request, string siblingSurname, int parentId)
+        public static Person GenSiblingPerson(string request, string siblingSurname, int parentId, string siblingName)
         {
-
+            Console.WriteLine("Creating sibling of " + siblingName);
             bool validChild = false;
             Person returnChild = null;
 
@@ -128,5 +132,7 @@ namespace Familjeträd
             return returnChild;
 
         }
+
+        ///GÖR FUNKTION FÖR SKAPA FÖRÄLDER
     }
 }

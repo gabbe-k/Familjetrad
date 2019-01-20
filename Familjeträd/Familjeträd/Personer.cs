@@ -16,7 +16,7 @@ namespace Familjeträd
         public readonly bool Sex;
         private List<int> childId;
         private int[] parentId;
-        public int partnerId = -1;
+        public int PartnerId = -1;
 
         public Person(string name, string surname, int birthyear, bool sex)
         {
@@ -36,6 +36,7 @@ namespace Familjeträd
                 {
                     Id = id;
                     validId = true;
+                    Console.WriteLine("u have id" + Id);
                 }
             }
 
@@ -43,20 +44,23 @@ namespace Familjeträd
 
         public void AssignChild(int count)
         {
-            for (int i = 0; i < count; i++)
+            if (PartnerId == -1)
             {
-                Person child = Generate.GenChildPerson(("Input the details for the child of " + Name), Surname, Birthyear);
-
-                child.parentId[0] = Id;
-
-                childId.Add(child.Id);
-
-                if (partnerId == -1)
+                Console.WriteLine("No partner present, partner is necessary to assign a child");
+            }
+            else
+            {
+                for (int i = 0; i < count; i++)
                 {
-                    child.parentId[1] = partnerId;
-                }
+                    Person child = Generate.GenChildPerson(("Input the details for the child of " + Name), Surname, Birthyear, Name);
 
-                PersonDB.Add(child);
+                    child.parentId[0] = Id;
+                    child.parentId[1] = PartnerId;
+
+                    childId.Add(child.Id);
+
+                    PersonDB.Add(child);
+                }
             }
 
         }
@@ -65,7 +69,7 @@ namespace Familjeträd
         {
             for (int i = 0; i < count; i++)
             {
-                Person sibling = Generate.GenSiblingPerson(("Input the details for the child of " + Name), Surname, parentId[0]);
+                Person sibling = Generate.GenSiblingPerson(("Input the details for the sibling of " + Name), Surname, parentId[0], Name);
 
                 PersonDB.Add(sibling);
             }
@@ -77,22 +81,22 @@ namespace Familjeträd
             {
                 partner = Generate.GenPerson("Type in details for the partner");
 
-                partnerId = partner.Id;
-                Id = partner.partnerId;
-                return partner;
-            }
-            else
-            {
-                if (PersonDB.CheckPartner(partner.partnerId))
-                {
-                    Console.WriteLine("Person already has partner");
-                    return null;
-                }
+                PersonDB.Add(partner);
 
-                partnerId = partner.Id;
-                Id = partner.partnerId;
+                PartnerId = partner.Id;
+                Id = partner.PartnerId;
                 return partner;
             }
+
+            if (PersonDB.CheckPartner(partner.PartnerId))
+            {
+                Console.WriteLine("Person already has partner");
+                return null;
+            }
+
+            PartnerId = partner.Id;
+            Id = partner.PartnerId;
+            return partner;
 
         }
 

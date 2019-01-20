@@ -29,7 +29,7 @@ namespace Familjeträd
         {
             for (int i = 0; i < personList.Count; i++)
             {
-                if (partnerId == personList[i].partnerId)
+                if (partnerId == personList[i].PartnerId)
                 {
                     return true;
                 }
@@ -49,6 +49,19 @@ namespace Familjeträd
             }
 
             return false;
+        }
+
+        public static void PrintDB()
+        {
+            for (int i = 0; i< personList.Count; i++)
+			{
+                Console.WriteLine(personList[i].Name);
+                Console.WriteLine(personList[i].Surname);
+                Console.WriteLine(personList[i].Birthyear);
+                Console.WriteLine(personList[i].Sex);
+                Console.WriteLine(personList[i].Id);
+                Console.WriteLine(personList[i].PartnerId);
+            }
         }
 
     }
