@@ -48,6 +48,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="PersonDB.cs" />
     <Compile Include="Personer.cs" />
+    <Compile Include="Print.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validator.cs" />

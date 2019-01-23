@@ -18,9 +18,7 @@ namespace Familjeträd
 
             while (!inputGood)
             {
-
-                Console.WriteLine(request);
-                Console.WriteLine("Please follow the syntax: name,surname,birthyear,sex");
+                Print.PrMsg(request, "Please follow the syntax: name,surname,birthyear,sex");
 
                 string input = Console.ReadLine();
 
@@ -42,7 +40,7 @@ namespace Familjeträd
                 }
                 else
                 {
-                    Console.WriteLine("Syntax error");
+                    Print.PrMsg("Syntax error");
                 }
 
             }
@@ -56,7 +54,7 @@ namespace Familjeträd
 
         public static Person GenChildPerson(string request, string parentSurname, int parentBirthyear, string parentName)
         {
-            Console.WriteLine("Creating sibling of " + parentName);
+            Print.PrMsg("Creating sibling of " + parentName);
             bool validChild = false;
             Person returnChild = null;
 
@@ -74,13 +72,13 @@ namespace Familjeträd
                     if (tmpChild.Surname != parentSurname)
                     {
                         tmpChild.Surname = parentSurname;
-                        Console.WriteLine("Surname has been adjusted to match parents");
+                        Print.PrMsg("Surname has been adjusted to match parents");
                     }
 
                 }
                 else
                 {
-                    Console.WriteLine("Error: Birthyear difference relative to parents needs to be atleast 18, and surname needs to match");
+                    Print.PrMsg("Error: Birthyear difference relative to parents needs to be atleast 18, and surname needs to match");
                 }
 
             }
@@ -93,7 +91,7 @@ namespace Familjeträd
 
         public static Person GenSiblingPerson(string request, string siblingSurname, int parentId, string siblingName)
         {
-            Console.WriteLine("Creating sibling of " + siblingName);
+            Print.PrMsg("Creating sibling of " + siblingName);
             bool validChild = false;
             Person returnChild = null;
 
@@ -102,25 +100,31 @@ namespace Familjeträd
 
                 Person tmpChild = GenPerson(request);
 
-                for (int i = 0; i < PersonDB.personList.Count; i++)
+                if (tmpChild.ParentId[0] == -1)
                 {
-                    if (parentId == PersonDB.personList[i].Id && PersonDB.personList[i].Birthyear - tmpChild.Birthyear > 17)
+                    validChild = true;
+                }
+                else
+                {
+                    for (int i = 0; i < PersonDB.personList.Count; i++)
                     {
-                        returnChild = tmpChild;
-
-                        validChild = true;
-
-                        if (tmpChild.Surname != siblingSurname)
+                        if (parentId == PersonDB.personList[i].Id && PersonDB.personList[i].Birthyear - tmpChild.Birthyear > 17)
                         {
-                            tmpChild.Surname = siblingSurname;
-                            Console.WriteLine("Surname has been adjusted to match sibling");
-                        }
+                            returnChild = tmpChild;
 
+                            validChild = true;
+                        }
+                        else
+                        {
+                            Print.PrMsg("Age difference between sibling and parent needs to be atleast 18");
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("Age difference between sibling and parent needs to be atleast 18");
-                    }
+                }
+
+                if (tmpChild.Surname != siblingSurname)
+                {
+                    tmpChild.Surname = siblingSurname;
+                    Print.PrMsg("Surname has been adjusted to match sibling");
                 }
 
             }
@@ -137,7 +141,7 @@ namespace Familjeträd
             returnParent[0] = null;
             returnParent[1] = null;
 
-            Console.WriteLine("Creating parents of " + personName);
+            Print.PrMsg("Creating parents of " + personName);
             bool validParents = false;
 
 
@@ -159,13 +163,13 @@ namespace Familjeträd
                         if (tmpParent[i].Surname != personSurname)
                         {
                             tmpParent[i].Surname = personSurname;
-                            Console.WriteLine("Surname has been adjusted to match child");
+                            Print.PrMsg("Surname has been adjusted to match child");
                         }
 
                     }
                     else
                     {
-                        Console.WriteLine("Age difference between child and parent needs to be atleast 18");
+                        Print.PrMsg("Age difference between child and parent needs to be atleast 18");
                     }
 
                 }

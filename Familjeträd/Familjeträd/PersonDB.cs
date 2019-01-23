@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Familjeträd.Input;
 
 namespace Familjeträd
 {
-    static class PersonDB
+    class PersonDB
     {
         public static List<Person> personList = new List<Person>();
 
@@ -49,19 +50,6 @@ namespace Familjeträd
             }
 
             return false;
-        }
-
-        public static void PrintDB()
-        {
-            for (int i = 0; i< personList.Count; i++)
-			{
-                Console.WriteLine(personList[i].Name);
-                Console.WriteLine(personList[i].Surname);
-                Console.WriteLine(personList[i].Birthyear);
-                Console.WriteLine(personList[i].Sex);
-                Console.WriteLine(personList[i].Id + " THIS IS ID");
-                Console.WriteLine(personList[i].PartnerId + " THIS IS PARTNER ID");
-            }
         }
 
     }

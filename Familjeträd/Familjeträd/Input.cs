@@ -11,37 +11,37 @@ namespace Familjeträd
 {
     class Input
     {
+
         public static void RequestAction()
         {
-            bool inputValid = false;
 
-            while (!inputValid)
+            while (true)
             {
-                Console.WriteLine("Write a command or a chain of commands, separating them with '.' input '!help' help");
+                Print.PrMsg("Write a command or a chain of commands, separating them with '.' input '!help' help", "To execute several commands in a row, separate them with &. Whitespace does not matter.");
 
                 string input = Console.ReadLine();
 
                 if (input == "!help")
                 {
                     Console.Clear();
-                    Console.WriteLine("-------------------------------");
-                    Console.WriteLine("Commands:");
-                    Console.WriteLine("");
-                    Console.WriteLine("-------------------------------");
+                    Print.PrMsg("Placeholder guide");
                 }
 
                 else
                 {
-                    List<string> commandList = Validator.SyntaxValidator(input);
+                    List<string>[] commandList = Validator.SyntaxValidator(input);
 
                     if (commandList == null)
                     {
-                        
+                        Print.PrMsg("Input not valid");
                     }
                     else
                     {
-                        Compiler.CompileRequest(commandList);
-                        PersonDB.PrintDB();
+                        foreach (var list in commandList)
+                        {
+                            Compiler.CompileRequest(list);
+                        }
+
                     }
 
                 }
@@ -54,32 +54,6 @@ namespace Familjeträd
 
 
 
-        public static string RequestString(string request)
-        {
 
-            bool inputValid = false;
-            string returnInput = "";
-
-            while (!inputValid)
-            {
-                Console.WriteLine(request);
-
-                string input = Console.ReadLine();
-
-                if (input.Length == 0 || Regex.Replace(input, "[^A-z]", "") != input)
-                {
-                    Console.WriteLine("Please use A-z only");
-                }
-                else
-                {
-                    returnInput = input;
-                    inputValid = true;
-                }
-
-            }
-
-            return returnInput;
-
-        }
     }
 }

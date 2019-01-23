@@ -16,7 +16,7 @@ namespace Familjeträd
         public readonly bool Sex;
         private List<int> childId = new List<int>();
         public int PartnerId = -1;
-        public int[] ParentId = new int[2];
+        public int[] ParentId = {-1, -1};
 
         public Person(string name, string surname, int birthyear, bool sex)
         {
@@ -36,7 +36,6 @@ namespace Familjeträd
                 {
                     Id = id;
                     validId = true;
-                    Console.WriteLine("u have id" + Id);
                 }
             }
 
@@ -46,7 +45,7 @@ namespace Familjeträd
         {
             if (PartnerId == -1)
             {
-                Console.WriteLine("No partner present, partner is necessary to assign a child");
+                Print.PrMsg("No partner present, partner is necessary to assign a child");
             }
             else
             {
@@ -90,7 +89,7 @@ namespace Familjeträd
 
             if (PersonDB.CheckPartner(partner.PartnerId))
             {
-                Console.WriteLine("Person already has partner");
+                Print.PrMsg("Person already has partner");
                 return null;
             }
 

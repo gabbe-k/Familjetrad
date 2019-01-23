@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
+
+
     class Program
     {
+
         static void Main(string[] args)
         {
             //Create Initial Person
 
+            Print.PrDb();
             Input.RequestAction();
 
             //Add.Children(2)
