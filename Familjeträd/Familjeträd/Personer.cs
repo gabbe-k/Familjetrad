@@ -14,9 +14,9 @@ namespace Familjeträd
         public int Id;
         public readonly int Birthyear;
         public readonly bool Sex;
-        private List<int> childId;
-        private int[] parentId;
+        private List<int> childId = new List<int>();
         public int PartnerId = -1;
+        public int[] ParentId = new int[2];
 
         public Person(string name, string surname, int birthyear, bool sex)
         {
@@ -54,8 +54,8 @@ namespace Familjeträd
                 {
                     Person child = Generate.GenChildPerson(("Input the details for the child of " + Name), Surname, Birthyear, Name);
 
-                    child.parentId[0] = Id;
-                    child.parentId[1] = PartnerId;
+                    child.ParentId[0] = Id;
+                    child.ParentId[1] = PartnerId;
 
                     childId.Add(child.Id);
 
@@ -69,7 +69,7 @@ namespace Familjeträd
         {
             for (int i = 0; i < count; i++)
             {
-                Person sibling = Generate.GenSiblingPerson(("Input the details for the sibling of " + Name), Surname, parentId[0], Name);
+                Person sibling = Generate.GenSiblingPerson(("Input the details for the sibling of " + Name), Surname, ParentId[0], Name);
 
                 PersonDB.Add(sibling);
             }
@@ -97,6 +97,28 @@ namespace Familjeträd
             PartnerId = partner.Id;
             Id = partner.PartnerId;
             return partner;
+
+        }
+
+        public Person[] AssignParents()
+        {
+            Person[] parents = null;
+
+            if (ParentId == null)
+            {
+
+            }
+            else
+            {
+                parents = Generate.GenParents("Please input the credentials for this persons parents", Surname, Name, Birthyear);
+
+                for (int i = 0; i < parents.Length; i++)
+                {
+                    PersonDB.Add(parents[i]);
+                }
+            }
+
+            return parents;
 
         }
 

@@ -85,6 +85,11 @@ namespace Familjeträd
                         }
                     }
 
+                    if (commandList[i].Contains("Parents") && tmpPersonList != null)
+                    {
+                        tmpPersonList[0].AssignParents();
+                    }
+
 
                 }
 

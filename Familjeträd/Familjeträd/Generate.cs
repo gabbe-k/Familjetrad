@@ -129,6 +129,52 @@ namespace Familjeträd
 
         }
 
-        ///GÖR FUNKTION FÖR SKAPA FÖRÄLDER
+
+
+        public static Person[] GenParents(string request, string personSurname, string personName, int personBirthyear)
+        {
+            Person[] returnParent = new Person[2];
+            returnParent[0] = null;
+            returnParent[1] = null;
+
+            Console.WriteLine("Creating parents of " + personName);
+            bool validParents = false;
+
+
+            while (!validParents)
+            {
+                Person[] tmpParent = new Person[2];
+
+                for (int i = 0; i < 2; i++)
+                {
+
+                    tmpParent[i] = GenPerson(request);
+
+                    if (tmpParent[i].Birthyear - personBirthyear > 17)
+                    {
+                        returnParent[i] = tmpParent[i];
+
+                        validParents = true;
+
+                        if (tmpParent[i].Surname != personSurname)
+                        {
+                            tmpParent[i].Surname = personSurname;
+                            Console.WriteLine("Surname has been adjusted to match child");
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Age difference between child and parent needs to be atleast 18");
+                    }
+
+                }
+
+            }
+
+            return returnParent;
+
+
+        }
     }
 }
