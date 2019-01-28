@@ -10,68 +10,45 @@ namespace Familjeträd
     {
         public static void PrMsg(params string[] input)
         {
-            Console.WriteLine("");
-            Console.WriteLine("-------------------------------");
+            Console.WriteLine();
+            CenterText("--------------------------------------------------------------");
             foreach (var t in input)
             {
-                Console.WriteLine(t);
+                CenterText(t);
             }
-            Console.WriteLine("-------------------------------");
-            Console.WriteLine("");
+            CenterText("--------------------------------------------------------------");
+            Console.WriteLine();
         }
 
         public static void PrDb()
         {
             List<Person> printList = PersonDB.personList;
-            int rowCount = 10;
-            int colCount = 10;
 
-            for (int j = 0; j < rowCount; j++)
+            CenterText("Every person in the database");
+
+            for (int i = 0; i < printList.Count; i++)
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    if (j == 0)
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                Console.Write("|Name     ");
-                                break;
-                            case 1:
-                                Console.Write("|Surname  ");
-                                break;
-                            case 2:
-                                Console.Write("|Birthday ");
-                                break;
-                            case 3:
-                                Console.Write("|Id ");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                Console.Write("|DataName     ");
-                                break;
-                            case 1:
-                                Console.Write("|DataSurname  ");
-                                break;
-                            case 2:
-                                Console.Write("|DataBirthday ");
-                                break;
-                            case 3:
-                                Console.Write("|DataId ");
-                                break;
-                        }
-                    }
-
-                }
-
+                Console.WriteLine();
+                CenterText(Convert.ToString(i+1));
+                CenterText("--------------");
+                CenterText(printList[i].Name);
+                CenterText(printList[i].Surname);
+                CenterText(Convert.ToString(printList[i].Id));
+                CenterText(Convert.ToString(printList[i].Birthyear));
+                CenterText(Convert.ToString(printList[i].PartnerId));
+                CenterText(Convert.ToString(printList[i].ParentId[0]));
+                CenterText(Convert.ToString(printList[i].ParentId[1]));
+                CenterText("--------------");
                 Console.WriteLine();
             }
 
         }
+
+        private static void CenterText(string text)
+        {
+            Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
+            Console.WriteLine(text);
+        }
+
     }
 }

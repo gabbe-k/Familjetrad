@@ -15,8 +15,9 @@ namespace Familjeträd
         {
             //Create Initial Person
 
-            Print.PrDb();
+
             Input.RequestAction();
+            
 
             //Add.Children(2)
             //Add.Parents

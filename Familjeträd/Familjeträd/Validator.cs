@@ -59,7 +59,7 @@ namespace Familjeträd
 
                 if (input == "printdb")
                 {
-                    //print db
+                    Print.PrDb();
                 }
                 else if (input.IndexOf(';') == input.Length - 1 && (!string.IsNullOrEmpty(input) || Regex.Replace(input, "[^0-9A-z.()]", "") == input))
                 {

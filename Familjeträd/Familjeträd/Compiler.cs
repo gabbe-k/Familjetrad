@@ -15,7 +15,6 @@ namespace Familjeträd
             //system där alla platser i listan = 0 om inte högre, där varje plats representerar en call av en funktion
             List<Person> tmpPersonList = new List<Person>();
             bool hasPerson = false;
-            bool hasPartner = false;
 
             for (int i = 0; i < commandList.Count; i++)
             {
@@ -76,14 +75,14 @@ namespace Familjeträd
                     if (commandList[i].Contains("Partner"))
                     {
                         tmpPersonList[0].AssignPartner(tmpPersonList[0], false);
-
-                        hasPartner = true;
                     }
 
-                    if (commandList[i].Contains("Children") && hasPartner)
+                    if (commandList[i].Contains("Children"))
                     {
                         int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
 
+                        Console.WriteLine("tmppersonlistcount " + tmpPersonList.Count);
+                        
                         for (int j = 0; j < tmpPersonList.Count; j++)
                         {
                             tmpPersonList[j].AssignChild(tmpCount);

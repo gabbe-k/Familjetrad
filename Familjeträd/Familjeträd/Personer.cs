@@ -17,6 +17,7 @@ namespace Familjeträd
         private List<int> childId = new List<int>();
         public int PartnerId = -1;
         public int[] ParentId = {-1, -1};
+        public List<int> siblingIdList = new List<int>();
 
         public Person(string name, string surname, int birthyear, bool sex)
         {
@@ -46,6 +47,8 @@ namespace Familjeträd
             if (PartnerId == -1)
             {
                 Print.PrMsg("No partner present, partner is necessary to assign a child");
+                Console.WriteLine("Person was added, to assign a partner and a child, use the 'Add' command");
+                Print.PrDb();
             }
             else
             {
@@ -68,7 +71,9 @@ namespace Familjeträd
         {
             for (int i = 0; i < count; i++)
             {
-                Person sibling = Generate.GenSiblingPerson(("Input the details for the sibling of " + Name), Surname, ParentId[0], Name);
+                Person sibling = Generate.GenSiblingPerson(("Input the details for the sibling of " + Name), Surname, ParentId, Name);
+
+                siblingIdList.Add(sibling.Id);
 
                 PersonDB.Add(sibling);
             }
@@ -109,7 +114,7 @@ namespace Familjeträd
             }
             else
             {
-                parents = Generate.GenParents("Please input the credentials for this persons parents", Surname, Name, Birthyear);
+                parents = Generate.GenParents("Please input the credentials for this persons parents", Surname, Name, Birthyear, Id, siblingIdList);
 
                 for (int i = 0; i < parents.Length; i++)
                 {

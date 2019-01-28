@@ -89,28 +89,29 @@ namespace Familjeträd
 
 
 
-        public static Person GenSiblingPerson(string request, string siblingSurname, int parentId, string siblingName)
+        public static Person GenSiblingPerson(string request, string siblingSurname, int[] parentId, string siblingName)
         {
             Print.PrMsg("Creating sibling of " + siblingName);
             bool validChild = false;
-            Person returnChild = null;
+            Person returnSibling = null;
 
             while (!validChild)
             {
 
-                Person tmpChild = GenPerson(request);
+                Person tmpSibling = GenPerson(request);
 
-                if (tmpChild.ParentId[0] == -1)
+                if (parentId[0] == -1)
                 {
+                    returnSibling = tmpSibling;
                     validChild = true;
                 }
                 else
                 {
                     for (int i = 0; i < PersonDB.personList.Count; i++)
                     {
-                        if (parentId == PersonDB.personList[i].Id && PersonDB.personList[i].Birthyear - tmpChild.Birthyear > 17)
+                        if (parentId[0] == PersonDB.personList[i].Id && PersonDB.personList[i].Birthyear - tmpSibling.Birthyear > 17)
                         {
-                            returnChild = tmpChild;
+                            returnSibling = tmpSibling;
 
                             validChild = true;
                         }
@@ -121,21 +122,22 @@ namespace Familjeträd
                     }
                 }
 
-                if (tmpChild.Surname != siblingSurname)
+                if (tmpSibling.Surname != siblingSurname)
                 {
-                    tmpChild.Surname = siblingSurname;
+                    tmpSibling.Surname = siblingSurname;
                     Print.PrMsg("Surname has been adjusted to match sibling");
                 }
 
+
             }
 
-            return returnChild;
+            return returnSibling;
 
         }
 
 
 
-        public static Person[] GenParents(string request, string personSurname, string personName, int personBirthyear)
+        public static Person[] GenParents(string request, string personSurname, string personName, int personBirthyear, int id, List<int> siblingIdList)
         {
             Person[] returnParent = new Person[2];
             returnParent[0] = null;
@@ -154,11 +156,27 @@ namespace Familjeträd
 
                     tmpParent[i] = GenPerson(request);
 
-                    if (tmpParent[i].Birthyear - personBirthyear > 17)
+                    if (personBirthyear - tmpParent[i].Birthyear > 17)
                     {
                         returnParent[i] = tmpParent[i];
 
                         validParents = true;
+
+                        for (int j = 0; j < PersonDB.personList.Count; j++)
+                        {
+                            for (int k = 0; k < siblingIdList.Count; k++)
+                            {
+                                if (siblingIdList[k] == PersonDB.personList[j].Id)
+                                {
+                                    PersonDB.personList[j].ParentId[i] = tmpParent[i].Id;
+                                }
+                            }
+
+                            if (id == PersonDB.personList[j].Id)
+                            {
+                                PersonDB.personList[j].ParentId[i] = tmpParent[i].Id;
+                            }
+                        }
 
                         if (tmpParent[i].Surname != personSurname)
                         {
@@ -173,6 +191,9 @@ namespace Familjeträd
                     }
 
                 }
+
+                tmpParent[0].PartnerId = tmpParent[1].Id;
+                tmpParent[1].PartnerId = tmpParent[0].Id;
 
             }
 
