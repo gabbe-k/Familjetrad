@@ -52,9 +52,46 @@ namespace Familjeträd
 
 
 
+        public static Person AddChild(string request, string parentSurname, int parentBirthyear, string parentName)
+        {
+            Print.PrMsg("Creating child of " + parentName);
+            bool validChild = false;
+            Person returnChild = null;
+
+            while (!validChild)
+            {
+
+                Person tmpChild = GenPerson(request);
+
+                if ((parentBirthyear - tmpChild.Birthyear) < 18)
+                {
+                    returnChild = tmpChild;
+
+                    validChild = true;
+
+                    if (tmpChild.Surname != parentSurname)
+                    {
+                        tmpChild.Surname = parentSurname;
+                        Print.PrMsg("Surname has been adjusted to match parents");
+                    }
+
+                }
+                else
+                {
+                    Print.PrMsg("Error: Birthyear difference relative to parents needs to be atleast 18, and surname needs to match");
+                }
+
+            }
+
+            return returnChild;
+        }
+
+
+
+
         public static Person GenChildPerson(string request, string parentSurname, int parentBirthyear, string parentName)
         {
-            Print.PrMsg("Creating sibling of " + parentName);
+            Print.PrMsg("Creating child of " + parentName);
             bool validChild = false;
             Person returnChild = null;
 
@@ -109,8 +146,9 @@ namespace Familjeträd
                 {
                     for (int i = 0; i < PersonDB.personList.Count; i++)
                     {
-                        if (parentId[0] == PersonDB.personList[i].Id && PersonDB.personList[i].Birthyear - tmpSibling.Birthyear > 17)
+                        if (parentId[0] == PersonDB.personList[i].Id && tmpSibling.Birthyear - PersonDB.personList[i].Birthyear > 17)
                         {
+                            tmpSibling.ParentId = parentId;
                             returnSibling = tmpSibling;
 
                             validChild = true;
@@ -146,12 +184,11 @@ namespace Familjeträd
             Print.PrMsg("Creating parents of " + personName);
             bool validParents = false;
 
-
             while (!validParents)
             {
                 Person[] tmpParent = new Person[2];
 
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 2;)
                 {
 
                     tmpParent[i] = GenPerson(request);
@@ -183,6 +220,8 @@ namespace Familjeträd
                             tmpParent[i].Surname = personSurname;
                             Print.PrMsg("Surname has been adjusted to match child");
                         }
+
+                        i++;
 
                     }
                     else

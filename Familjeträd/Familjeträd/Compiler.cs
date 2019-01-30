@@ -21,7 +21,11 @@ namespace Familjeträd
 
                 if (commandList[0] == "Add")
                 {
-
+                    tmpPersonList.Add(Input.PickPerson());
+                    if (tmpPersonList[0] == null)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
@@ -58,43 +62,43 @@ namespace Familjeträd
 
                         hasPerson = true;
                     }
+                }
 
-                    if(commandList[i].Contains("Siblings"))
+
+
+                if (commandList[i].Contains("Siblings"))
+                {
+                    int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
+
+                    Console.WriteLine(tmpPersonList.Count);
+
+                    for (int j = 0; j < tmpPersonList.Count; j++)
                     {
-                        int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
-
-                        Console.WriteLine(tmpPersonList.Count);
-
-                        for (int j = 0; j < tmpPersonList.Count; j++)
-                        {
-                            Console.WriteLine("IN HER");
-                            tmpPersonList[j].AssignSibling(tmpCount);
-                        }
+                        Console.WriteLine("IN HER");
+                        tmpPersonList[j].AssignSibling(tmpCount);
                     }
+                }
 
-                    if (commandList[i].Contains("Partner"))
+                if (commandList[i].Contains("Partner"))
+                {
+                    tmpPersonList[0].AssignPartner(tmpPersonList[0], false);
+                }
+
+                if (commandList[i].Contains("Children"))
+                {
+                    int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
+
+                    Console.WriteLine("tmppersonlistcount " + tmpPersonList.Count);
+
+                    for (int j = 0; j < tmpPersonList.Count; j++)
                     {
-                        tmpPersonList[0].AssignPartner(tmpPersonList[0], false);
+                        tmpPersonList[j].AssignChild(tmpCount);
                     }
+                }
 
-                    if (commandList[i].Contains("Children"))
-                    {
-                        int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
-
-                        Console.WriteLine("tmppersonlistcount " + tmpPersonList.Count);
-                        
-                        for (int j = 0; j < tmpPersonList.Count; j++)
-                        {
-                            tmpPersonList[j].AssignChild(tmpCount);
-                        }
-                    }
-
-                    if (commandList[i].Contains("Parents") && hasPerson)
-                    {
-                        tmpPersonList[0].AssignParents();
-                    }
-
-
+                if (commandList[i].Contains("Parents") && hasPerson)
+                {
+                    tmpPersonList[0].AssignParents();
                 }
 
             }

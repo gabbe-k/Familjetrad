@@ -52,5 +52,10 @@ namespace Familjeträd
             return false;
         }
 
+        public static List<Person> filterDb(string valuesNeeded, string peopleNeeded)
+        {
+            return null;
+        }
+
     }
 }

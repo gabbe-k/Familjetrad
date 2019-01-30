@@ -50,6 +50,45 @@ namespace Familjeträd
 
         }
 
+        public static Person PickPerson()
+        {
+            if (PersonDB.personList.Count == 0)
+            {
+                Print.PrMsg("No people have been added, please use 'Create' command to add some!");
+            }
+            else
+            {
+                Print.PrDb();
+                Print.PrMsg("Please pick a person by inputting the associated number of the person");
+                bool validNumber = false;
+                Person returnPerson = new Person("", "", 0, false);
+
+                while (!validNumber)
+                {
+                    string input = Console.ReadLine();
+
+                    if (Regex.IsMatch(input, "[0-9]+"))
+                    {
+                        int personNum = Convert.ToInt32(input);
+
+                        returnPerson = PersonDB.personList[personNum-1];
+
+                        validNumber = true;
+                    }
+                    else
+                    {
+                        Print.PrMsg("Input invalid, use numbers only");
+                    }
+                }
+
+                return returnPerson;
+
+            }
+
+            return null;
+
+        }
+
 
 
 

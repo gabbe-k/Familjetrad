@@ -15,7 +15,7 @@ namespace Familjeträd
         {
             //Create Initial Person
 
-
+            Console.WindowWidth = 200;
             Input.RequestAction();
             
 

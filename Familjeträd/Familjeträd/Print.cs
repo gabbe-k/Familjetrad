@@ -29,7 +29,7 @@ namespace Familjeträd
             for (int i = 0; i < printList.Count; i++)
             {
                 Console.WriteLine();
-                CenterText(Convert.ToString(i+1));
+                CenterText("Number " + Convert.ToString(i+1));
                 CenterText("--------------");
                 CenterText(printList[i].Name);
                 CenterText(printList[i].Surname);
