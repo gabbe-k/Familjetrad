@@ -17,7 +17,7 @@ namespace Familjeträd
         private List<int> childId = new List<int>();
         public int PartnerId = -1;
         public int[] ParentId = {-1, -1};
-        public List<int> siblingIdList = new List<int>();
+        public List<int> SiblingIdList = new List<int>();
 
         public Person(string name, string surname, int birthyear, bool sex)
         {
@@ -69,14 +69,33 @@ namespace Familjeträd
 
         public void AssignSibling(int count)
         {
+            Person[] siblingArr = new Person[count];
+
+            List<int> tmpIdList = new List<int>();
+
+            tmpIdList.Add(Id);
+
             for (int i = 0; i < count; i++)
             {
-                Person sibling = Generate.GenSiblingPerson(("Input the details for the sibling of " + Name), Surname, ParentId, Name);
+                siblingArr[i] = Generate.GenSiblingPerson(("Input the details for the sibling of " + Name), Surname, ParentId, Name);
 
-                siblingIdList.Add(sibling.Id);
-
-                PersonDB.Add(sibling);
+                tmpIdList.Add(siblingArr[i].Id);
+                SiblingIdList.Add(siblingArr[i].Id);
             }
+
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = 0; j < tmpIdList.Count; j++)
+                {
+                    if (tmpIdList[j] != siblingArr[i].Id)
+                    {
+                        siblingArr[i].SiblingIdList.Add(tmpIdList[j]);
+                    }
+                }
+
+                PersonDB.Add(siblingArr[i]);
+            }
+
         }
 
         public Person AssignPartner(Person partner, bool partnerExist)
@@ -114,7 +133,7 @@ namespace Familjeträd
             }
             else
             {
-                parents = Generate.GenParents("Please input the credentials for this persons parents", Surname, Name, Birthyear, Id, siblingIdList);
+                parents = Generate.GenParents("Please input the credentials for this persons parents", Surname, Name, Birthyear, Id, SiblingIdList);
 
                 for (int i = 0; i < parents.Length; i++)
                 {

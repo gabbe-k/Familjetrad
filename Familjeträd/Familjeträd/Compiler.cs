@@ -15,17 +15,22 @@ namespace Familjeträd
             //system där alla platser i listan = 0 om inte högre, där varje plats representerar en call av en funktion
             List<Person> tmpPersonList = new List<Person>();
             bool hasPerson = false;
+            bool picked = false;
 
             for (int i = 0; i < commandList.Count; i++)
             {
 
-                if (commandList[0] == "Add")
+                if (commandList[0] == "Add" && !picked)
                 {
                     tmpPersonList.Add(Input.PickPerson());
                     if (tmpPersonList[0] == null)
                     {
                         break;
                     }
+
+                    hasPerson = true;
+                    picked = true;
+
                 }
                 else
                 {
@@ -99,6 +104,7 @@ namespace Familjeträd
                 if (commandList[i].Contains("Parents") && hasPerson)
                 {
                     tmpPersonList[0].AssignParents();
+
                 }
 
             }
