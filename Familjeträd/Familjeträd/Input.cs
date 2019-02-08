@@ -17,14 +17,18 @@ namespace Familjeträd
 
             while (true)
             {
-                Print.PrMsg("Write a command or a chain of commands, separating them with '.' input '!help' help", "To execute several commands in a row, separate them with &. Whitespace does not matter.");
+                Print.PrMsg("Write a command or a chain of commands, separating them with '.' input '!help' for help", "To execute several commands in a row, separate them with &. Whitespace does not matter.");
+                Print.PrMsg("Use 'printdb' to print out the entire database of people.");
 
                 string input = Console.ReadLine();
 
                 if (input == "!help")
                 {
                     Console.Clear();
-                    Print.PrMsg("Placeholder guide");
+                    Print.PrMsg("Actions are separated with '.', for example: Create.Person(2); or Create.Person(1).Siblings(2); ");
+                    Print.PrMsg("To write several commands at once, the can be separated with '&', for example: Create.Person(2); & Create.Person(3); ");
+                    Print.PrMsg("Start your line with either Add or Create depending on your preferred action");
+                    Print.PrMsg("Please use a valid operation prefix: Parents, Partner, Children(1-9), Siblings(1-9), Person(1-9), Person(name, surname, birthyear, 'Male' / 'Female')");
                 }
 
                 else

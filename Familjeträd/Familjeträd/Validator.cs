@@ -73,7 +73,7 @@ namespace Familjeträd
                         for (int i = 1; i < inputArr.Length; i++)
                         {
                             string validPrefix =
-                                "Children[(][0-9][)]|Siblings[(][0-9][)]|Person[(][0-9][)]|Person[(][A-z]+[,][A-z]+[,][0-9]+[,](Male|Female)[)]";
+                                "Children[(][0-9]+[)]|Siblings[(][0-9]+[)]|Person[(][0-9]+[)]|Person[(][A-z]+[,][A-z]+[,][0-9]+[,](Male|Female|male|female)[)]";
 
                             if (Regex.IsMatch(inputArr[i], "Parents|Partner") && !inputArr[i].Contains('(') &&
                                 !inputArr[i].Contains(')'))

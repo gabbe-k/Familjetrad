@@ -26,6 +26,22 @@ namespace Familjeträd
 
         }
 
+        public static string GetName(int Id)
+        {
+            string returnName = "Error: No name found";
+
+            for (int i = 0; i < personList.Count; i++)
+            {
+                if (Id == personList[i].Id)
+                {
+                    returnName = personList[i].Name + " " + personList[i].Surname;
+                    
+                }
+            }
+
+            return returnName;
+        }
+
         public static bool CheckPartner(int partnerId)
         {
             for (int i = 0; i < personList.Count; i++)

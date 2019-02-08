@@ -17,12 +17,12 @@ namespace Familjeträd
             CenterText(person.Surname);
             CenterText(Convert.ToString(person.Id));
             CenterText(Convert.ToString(person.Birthyear));
-            CenterText(Convert.ToString(person.PartnerId));
-            CenterText(Convert.ToString(person.ParentId[0]));
-            CenterText(Convert.ToString(person.ParentId[1]));
+            CenterText(PersonDB.GetName(person.PartnerId));
+            CenterText(PersonDB.GetName(person.ParentId[0]));
+            CenterText(PersonDB.GetName(person.ParentId[1]));
             for (int j = 0; j < person.SiblingIdList.Count; j++)
             {
-                CenterText("Sibling" + j + ": " + Convert.ToString(person.SiblingIdList[j]));
+                CenterText("Sibling" + j+1 + ": " + PersonDB.GetName(person.SiblingIdList[j]));
             }
             CenterText("--------------");
             Console.WriteLine();
@@ -40,15 +40,39 @@ namespace Familjeträd
             Console.WriteLine();
         }
 
-        public static void PrDb()
+        public static void PrDb(int parentMatch = -1, int partnerMatch = -1)
         {
             List<Person> printList = PersonDB.personList;
 
-            CenterText("Every person in the database");
-
-            for (int i = 0; i < printList.Count; i++)
+            if (parentMatch != -1)
             {
-                PrintBox(printList[i], i);
+                for (int i = 0; i < printList.Count; i++)
+                {
+                    if (parentMatch == printList[i].ParentId[0] || parentMatch == printList[i].ParentId[1] || printList[i].Id == parentMatch)
+                    {
+                        PrintBox(printList[i], i);
+                    }
+                }
+            }
+            else if(partnerMatch != -1)
+            {
+                for (int i = 0; i < printList.Count; i++)
+                {
+                    if (printList[i].Id == partnerMatch)
+                    {
+                        PrintBox(printList[i], i);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Everyone in database");
+
+                for (int i = 0; i < printList.Count; i++)
+                {
+                    PrintBox(printList[i], i);
+                }
+
             }
 
         }

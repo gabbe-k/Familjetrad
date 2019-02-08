@@ -12,7 +12,6 @@ namespace Familjeträd
         public static void CompileRequest(List<string> commandList)
         {
 
-            //system där alla platser i listan = 0 om inte högre, där varje plats representerar en call av en funktion
             List<Person> tmpPersonList = new List<Person>();
             bool hasPerson = false;
             bool picked = false;
@@ -60,7 +59,7 @@ namespace Familjeträd
 
                         for (int j = 0; j < tmpCount; j++)
                         {
-                            Person tmpPerson =  Generate.GenPerson("Type in the details for person #" + j);
+                            Person tmpPerson =  Generate.GenPerson("Type in the details for person #" + j + 1);
                             tmpPersonList.Add(tmpPerson);
                             PersonDB.Add(tmpPerson);
                         }
@@ -69,44 +68,47 @@ namespace Familjeträd
                     }
                 }
 
-
-
-                if (commandList[i].Contains("Siblings"))
+                for (int j = 0; j < tmpPersonList.Count; j++)
                 {
-                    int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
 
-                    Console.WriteLine(tmpPersonList.Count);
-
-                    for (int j = 0; j < tmpPersonList.Count; j++)
+                    if (commandList[i].Contains("Siblings"))
                     {
-                        Console.WriteLine("IN HER");
+                        //Print.PrMsg("Assigning siblings for person " + j + 1 + ", Name: " + tmpPersonList[j].Name);
+
+                        int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
+
                         tmpPersonList[j].AssignSibling(tmpCount);
                     }
-                }
 
-                if (commandList[i].Contains("Partner"))
-                {
-                    tmpPersonList[0].AssignPartner(tmpPersonList[0], false);
-                }
-
-                if (commandList[i].Contains("Children"))
-                {
-                    int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
-
-                    Console.WriteLine("tmppersonlistcount " + tmpPersonList.Count);
-
-                    for (int j = 0; j < tmpPersonList.Count; j++)
+                    if (commandList[i].Contains("Partner"))
                     {
+                        //Print.PrMsg("Assigning partner for person " + j + 1 + ", Name: " + tmpPersonList[j].Name);
+
+                        tmpPersonList[j].AssignPartner(tmpPersonList[j], false);
+                    }
+
+                    if (commandList[i].Contains("Children"))
+                    {
+                        //Print.PrMsg("Assigning children for person " + j + 1 + ", Name: " + tmpPersonList[j].Name);
+
+                        int tmpCount = Convert.ToInt32(commandList[i].Substring(commandList[i].IndexOf('*') + 1));
+
                         tmpPersonList[j].AssignChild(tmpCount);
                     }
+
+                    if (commandList[i].Contains("Parents") && hasPerson)
+                    {
+                        //Print.PrMsg("Assigning parents for person " + j+1 + ", Name: "+ tmpPersonList[j].Name);
+                        tmpPersonList[j].AssignParents();
+                    }
+
                 }
 
-                if (commandList[i].Contains("Parents") && hasPerson)
-                {
-                    tmpPersonList[0].AssignParents();
+            }
 
-                }
-
+            if (tmpPersonList.Count == 0)
+            {
+                Print.PrMsg("You did not add any people prior to assigning other family members, did you mean to use 'Add'?");
             }
         }
     }
