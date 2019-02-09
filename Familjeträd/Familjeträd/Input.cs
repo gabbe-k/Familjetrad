@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
+    /// <summary>
+    /// Used for handling the command inputs for the user
+    /// </summary>
     class Input
     {
-
+        /// <summary>
+        /// Main command line interface, used for requesting an input and helping the users
+        /// </summary>
         public static void RequestAction()
         {
 
@@ -54,7 +59,12 @@ namespace Familjeträd
 
         }
 
-        public static Person PickPerson()
+
+        /// <summary>
+        /// Function used for picking a person when using the command 'Add'
+        /// </summary>
+        /// <returns>The person picked</returns>
+        public static Person PickPerson(string request)
         {
             if (PersonDB.personList.Count == 0)
             {
@@ -63,6 +73,7 @@ namespace Familjeträd
             else
             {
                 Print.PrDb();
+                Print.PrMsg(request);
                 Print.PrMsg("Please pick a person by inputting the associated number of the person");
                 bool validNumber = false;
                 Person returnPerson = new Person("", "", 0, false);
@@ -71,7 +82,7 @@ namespace Familjeträd
                 {
                     string input = Console.ReadLine();
 
-                    if (Regex.IsMatch(input, "[0-9]+"))
+                    if (Validator.HasKnownChars(input, "0-9"))
                     {
                         int personNum = Convert.ToInt32(input);
 
@@ -90,6 +101,39 @@ namespace Familjeträd
             }
 
             return null;
+
+        }
+
+
+
+        public static bool YesOrNo(string request)
+        {
+            Print.PrMsg(request);
+
+            bool inputValid = false;
+            bool answer = false;
+
+            while (!inputValid)
+            {
+                string input = Console.ReadLine();
+
+                if (Validator.HasKnownChars(input, "Yes") || Validator.HasKnownChars(input, "yes"))
+                {
+                    answer = true;
+                    inputValid = true;
+                }
+                else if (Validator.HasKnownChars(input, "No") || Validator.HasKnownChars(input, "no"))
+                {
+                    answer = false;
+                    inputValid = true;
+                }
+                else
+                {
+                    Print.PrMsg("Please use 'Yes' or 'No' (not case sensitive)");
+                }
+            }
+
+            return answer;
 
         }
 

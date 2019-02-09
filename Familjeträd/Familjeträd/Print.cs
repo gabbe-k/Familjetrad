@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
+    /// <summary>
+    /// Prints info 
+    /// </summary>
     class Print
     {
+        /// <summary>
+        /// Prints a box of text containing information about a person
+        /// </summary>
+        /// <param name="person">Contains an instance of the class 'Person', is used to fetch information about the current person</param>
+        /// <param name="number">Represents the number of the person needed to be written for a selection</param>
         public static void PrintBox(Person person, int number)
         {
             Console.WriteLine();
@@ -15,11 +23,20 @@ namespace Familjeträd
             CenterText("--------------");
             CenterText(person.Name);
             CenterText(person.Surname);
-            CenterText(Convert.ToString(person.Id));
-            CenterText(Convert.ToString(person.Birthyear));
-            CenterText(PersonDB.GetName(person.PartnerId));
-            CenterText(PersonDB.GetName(person.ParentId[0]));
-            CenterText(PersonDB.GetName(person.ParentId[1]));
+            CenterText("Id: " + Convert.ToString(person.Id));
+            CenterText("Birthyear: " + Convert.ToString(person.Birthyear));
+            if (person.Sex == true)
+            {
+                CenterText("Sex: Female");
+            }
+            else
+            {
+                CenterText("Sex: Male");
+            }
+
+            CenterText("Partner: " + PersonDB.GetName(person.PartnerId));
+            CenterText("Parent 1: " + PersonDB.GetName(person.ParentId[0]));
+            CenterText("Parent 2: " + PersonDB.GetName(person.ParentId[1]));
             for (int j = 0; j < person.SiblingIdList.Count; j++)
             {
                 CenterText("Sibling" + j+1 + ": " + PersonDB.GetName(person.SiblingIdList[j]));
@@ -28,6 +45,10 @@ namespace Familjeträd
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Prints a message contained within 2 lines of '------'
+        /// </summary>
+        /// <param name="input">The message to be printed</param>
         public static void PrMsg(params string[] input)
         {
             Console.WriteLine();
@@ -40,6 +61,11 @@ namespace Familjeträd
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Prints the entire database of people
+        /// </summary>
+        /// <param name="parentMatch">Id of parent if you want to print out a family</param>
+        /// <param name="partnerMatch">Id of partner if you want to print out the partner</param>
         public static void PrDb(int parentMatch = -1, int partnerMatch = -1)
         {
             List<Person> printList = PersonDB.personList;
@@ -106,6 +132,10 @@ namespace Familjeträd
             }
         } */
 
+       /// <summary>
+       /// Prints a text in the console, but centered
+       /// </summary>
+       /// <param name="text">The message to be printed</param>
         private static void CenterText(string text)
         {
             Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));

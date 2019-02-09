@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
+    /// <summary>
+    /// Used for creating instances of people and assigning family members to them
+    /// </summary>
     class Person
     {
         public readonly string Name;
@@ -42,6 +45,14 @@ namespace Familjeträd
 
         }
 
+
+
+
+
+        /// <summary>
+        /// Assigns child to the current person
+        /// </summary>
+        /// <param name="count">Specifies the amount of children created</param>
         public void AssignChild(int count)
         {
             if (PartnerId == -1)
@@ -67,6 +78,13 @@ namespace Familjeträd
 
         }
 
+
+
+
+        /// <summary>
+        /// Assigns siblings to the current person
+        /// </summary>
+        /// <param name="count">Specifies how many siblings that should be assigned</param>
         public void AssignSibling(int count)
         {
             Person[] siblingArr = new Person[count];
@@ -98,47 +116,74 @@ namespace Familjeträd
 
         }
 
-        public Person AssignPartner(Person partner, bool partnerExist)
+
+
+
+        /// <summary>
+        /// Assigns partner for the current person
+        /// </summary>
+        /// <param name="partner">The partner that has been picked (if it has)</param>
+        /// <param name="id">Used to check if the person already has a partner</param>
+        public void AssignPartner(int id, Person partner = null)
         {
-            if (!partnerExist)
+            if (!PersonDB.CheckPartner(id))
             {
-                partner = Generate.GenPerson("Type in details for the partner");
 
-                PersonDB.Add(partner);
+                if (partner == null)
+                {
+                    Person tmpPartner = Generate.GenPerson("Type in details for the partner");
 
-                PartnerId = partner.Id;
-                partner.PartnerId = Id; 
-                return partner;
-            }
+                    PartnerId = tmpPartner.Id;
+                    tmpPartner.PartnerId = Id;
 
-            if (PersonDB.CheckPartner(partner.PartnerId))
-            {
-                Print.PrMsg("Person already has partner");
-                return null;
-            }
+                    PersonDB.Add(tmpPartner);
+                }
+                else
+                {
 
-            PartnerId = partner.Id;
-            Id = partner.PartnerId;
-            return partner;
+                    for (int i = 0; i < PersonDB.personList.Count; i++)
+                    {
+                        if (PersonDB.personList[i].Id == partner.Id)
+                        {
+                            PersonDB.personList[i].PartnerId = Id;
+                            PartnerId = PersonDB.personList[i].Id;
+                        }
+                    }
+                }
 
-        }
-
-        public Person[] AssignParents()
-        {
-            Person[] parents = null;
-
-            if (ParentId == null)
-            {
 
             }
             else
             {
-                parents = Generate.GenParents("Please input the credentials for this persons parents", Surname, Name, Birthyear, Id, SiblingIdList);
+                Print.PrMsg("Person already has partner");
+            }
+
+        }
+
+
+
+
+        /// <summary>
+        /// Assigns parents to a person
+        /// </summary>
+        /// <returns></returns>
+        public Person[] AssignParents()
+        {
+            Person[] parents = null;
+
+            if (ParentId[0] == -1)
+            {
+                 parents = Generate.GenParents("Please input the credentials for this persons parents", Surname, Name,
+                 Birthyear, Id, SiblingIdList);
 
                 for (int i = 0; i < parents.Length; i++)
                 {
                     PersonDB.Add(parents[i]);
                 }
+            }
+            else
+            {
+                Print.PrMsg("Person already has parents");
             }
 
             return parents;

@@ -8,7 +8,7 @@ namespace Familjeträd
 {
 
     /// <summary>
-    /// A program that allows you to create a family tree of people using a programming language
+    /// A program that allows you to create a family tree of people using a custom programming-like language
     /// </summary>
     class Program
     {

@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
+    /// <summary>
+    /// Runs functions depending on the users command inputs
+    /// </summary>
     class Compiler
     {
+        /// <summary>
+        /// Runs functions for the specified commands in the list 'commandList'
+        /// </summary>
+        /// <param name="commandList">The current list of commands returned from the validator</param>
         public static void CompileRequest(List<string> commandList)
         {
 
@@ -21,7 +28,7 @@ namespace Familjeträd
 
                 if (commandList[0] == "Add" && !picked)
                 {
-                    tmpPersonList.Add(Input.PickPerson());
+                    tmpPersonList.Add(Input.PickPerson("Pick a person to execute your commands on"));
                     if (tmpPersonList[0] == null)
                     {
                         break;
@@ -84,7 +91,17 @@ namespace Familjeträd
                     {
                         //Print.PrMsg("Assigning partner for person " + j + 1 + ", Name: " + tmpPersonList[j].Name);
 
-                        tmpPersonList[j].AssignPartner(tmpPersonList[j], false);
+                        if (Input.YesOrNo("Do you want to pick a partner or create a new one? (Yes/No)"))
+                        {
+                            Person pickedPartner = Input.PickPerson("Pick a partner for" + tmpPersonList[j].Name);
+
+                            tmpPersonList[j].AssignPartner(tmpPersonList[j].Id, pickedPartner);
+                        }
+                        else
+                        {
+                            tmpPersonList[j].AssignPartner(tmpPersonList[j].Id);
+                        }
+
                     }
 
                     if (commandList[i].Contains("Children"))

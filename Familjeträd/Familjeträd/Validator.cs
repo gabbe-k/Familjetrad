@@ -7,20 +7,29 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
+    /// <summary>
+    /// Validates syntax
+    /// </summary>
     class Validator
     {
-        public static List<string> PersonSyntaxValidator(string input, string Prefix)
+        /// <summary>
+        /// Validates inputs according to the person syntax
+        /// </summary>
+        /// <param name="input">Input, contains attempt at the person syntax</param>
+        /// <param name="prefix">The prefix returned to the compiler</param>
+        /// <returns>A list with commands for the compiler</returns>
+        public static List<string> PersonSyntaxValidator(string input, string prefix)
         {
             //Removes whitespace
             input = Regex.Replace(input, @"\s+", "");
 
             List<string> outList = new List<string>();
 
-            if (Regex.IsMatch(input, "[A-z]+[,][A-z]+[,][0-9]+[,](Male|Female)"))
+            if (Regex.IsMatch(input, "[A-z]+[,][A-z]+[,][0-9]+[,](Male|Female|male|female)"))
             {
                 string[] inputArr = input.Split(',');
 
-                outList.Add(Prefix);
+                outList.Add(prefix);
 
                 for (int i = 0; i < inputArr.Length; i++)
                 {
@@ -33,12 +42,17 @@ namespace Familjeträd
             {
                 return outList = null;
             }
+
         }
 
 
 
 
-
+        /// <summary>
+        /// Validates commands that the person has inputted
+        /// </summary>
+        /// <param name="inputFull">The full input, one or more commands</param>
+        /// <returns></returns>
         public static List<string>[] SyntaxValidator(string inputFull)
         {
             //Removes whitespace
@@ -82,7 +96,6 @@ namespace Familjeträd
                             }
                             else if (Regex.IsMatch(inputArr[i], validPrefix))
                             {
-                                Console.WriteLine(inputArr[i]);
 
                                 if ((i == inputArr.Length - 1 && Validator.HasKnownChars(inputArr[i], "0-9A-z();,") ||
                                      (i < inputArr.Length && Validator.HasKnownChars(inputArr[i], "0-9A-z(),"))))
@@ -119,7 +132,7 @@ namespace Familjeträd
                                             outList[k].Add(prefix + "*" + tmp);
                                         }
                                     }
-                                    else if (Validator.HasKnownChars(tmp, "[A-z]+[,][A-z]+[,][0-9]+[,](Male|Female)") &&
+                                    else if (Validator.HasKnownChars(tmp, "[A-z]+[,][A-z]+[,][0-9]+[,](Male|Female|male|female)") &&
                                              inputArr[0] == "Create")
                                     {
                                         outList[k].AddRange(PersonSyntaxValidator(tmp, "PersonStruct"));
@@ -187,36 +200,12 @@ namespace Familjeträd
 
 
 
-        public static bool AllStringValid(string[] input)
-        {
-            bool valid = false;
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i].Any(char.IsDigit))
-                {
-                    if (Regex.Replace(input[i], "[^0-9]", "") == input[i])
-                    {
-                        valid = true;
-                    }
-
-                }
-                else
-                {
-                    if (Regex.Replace(input[i], "[^A-z]", "") == input[i])
-                    {
-                        valid = true;
-                    }
-                }
-            }
-
-            return valid;
-        }
-
-
-
-
-
+        /// <summary>
+        /// Checks if a string has specified chars and nothing else
+        /// </summary>
+        /// <param name="input">The input that needs to be checked</param>
+        /// <param name="knownChars">Regex statement for what chars that are allowed to appear in the chars</param>
+        /// <returns>True if the input lives up to the regex</returns>
         public static bool HasKnownChars(string input, string knownChars)
         {
             if (Regex.Replace(input, "[^" + knownChars+ "]", "") == input)

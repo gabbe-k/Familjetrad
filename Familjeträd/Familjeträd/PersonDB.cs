@@ -7,6 +7,9 @@ using static Familjeträd.Input;
 
 namespace Familjeträd
 {
+    /// <summary>
+    /// Contains a list of all people and has functions related to the database
+    /// </summary>
     class PersonDB
     {
         public static List<Person> personList = new List<Person>();
@@ -16,7 +19,7 @@ namespace Familjeträd
             personList.Add(person);
         }
 
-        static void CheckParent(int[] parentId)
+        /*static void CheckParent(int[] parentId)
         {
 
         }
@@ -24,11 +27,20 @@ namespace Familjeträd
         static void CheckSiblings(int[] parentId)
         {
 
-        }
+        }*/
 
+
+
+
+
+        /// <summary>
+        /// Gets name of person from an id of a person
+        /// </summary>
+        /// <param name="Id">Id of the person</param>
+        /// <returns>Name of the person</returns>
         public static string GetName(int Id)
         {
-            string returnName = "Error: No name found";
+            string returnName = "No person assigned";
 
             for (int i = 0; i < personList.Count; i++)
             {
@@ -42,6 +54,14 @@ namespace Familjeträd
             return returnName;
         }
 
+
+
+
+        /// <summary>
+        /// Checks if the person has a partner
+        /// </summary>
+        /// <param name="partnerId">Id of partner</param>
+        /// <returns>True if the person has partner</returns>
         public static bool CheckPartner(int partnerId)
         {
             for (int i = 0; i < personList.Count; i++)
@@ -55,6 +75,14 @@ namespace Familjeträd
             return false;
         }
 
+
+
+
+        /// <summary>
+        /// Checks if an id is used
+        /// </summary>
+        /// <param name="id">Id that is checked</param>
+        /// <returns>True if id is dupe</returns>
         public static bool CheckDupe(int id)
         {
             for (int i = 0; i < personList.Count; i++)
@@ -68,6 +96,15 @@ namespace Familjeträd
             return false;
         }
 
+
+
+
+        /// <summary>
+        /// Work in progress function for filtering database
+        /// </summary>
+        /// <param name="valuesNeeded"></param>
+        /// <param name="peopleNeeded"></param>
+        /// <returns></returns>
         public static List<Person> filterDb(string valuesNeeded, string peopleNeeded)
         {
             return null;

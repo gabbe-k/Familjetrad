@@ -9,8 +9,16 @@ using System.Threading.Tasks;
 
 namespace Familjeträd
 {
+    /// <summary>
+    /// Generates different people for different uses
+    /// </summary>
     class Generate
     {
+        /// <summary>
+        /// Generates a person
+        /// </summary>
+        /// <param name="request">Specifies which situation the person is generated for</param>
+        /// <returns>A person newly generated</returns>
         public static Person GenPerson(string request)
         {
             bool inputGood = false;
@@ -26,7 +34,7 @@ namespace Familjeträd
 
                 if (personList != null)
                 {
-                    Console.WriteLine(personList[0]);
+
                     string name = personList[1];
                     string surname = personList[2];
                     int birthyear = Convert.ToInt32(personList[3]);
@@ -52,43 +60,14 @@ namespace Familjeträd
 
 
 
-        public static Person AddChild(string request, string parentSurname, int parentBirthyear, string parentName)
-        {
-            Print.PrMsg("Creating child of " + parentName);
-            bool validChild = false;
-            Person returnChild = null;
-
-            while (!validChild)
-            {
-
-                Person tmpChild = GenPerson(request);
-
-                if ((parentBirthyear - tmpChild.Birthyear) < 18)
-                {
-                    returnChild = tmpChild;
-
-                    validChild = true;
-
-                    if (tmpChild.Surname != parentSurname)
-                    {
-                        tmpChild.Surname = parentSurname;
-                        Print.PrMsg("Surname has been adjusted to match parents");
-                    }
-
-                }
-                else
-                {
-                    Print.PrMsg("Error: Birthyear difference relative to parents needs to be atleast 18, and surname needs to match");
-                }
-
-            }
-
-            return returnChild;
-        }
-
-
-
-
+        /// <summary>
+        /// Generates a child for a couple
+        /// </summary>
+        /// <param name="request">Specifies the situation the child is created for</param>
+        /// <param name="parentSurname">Surname of the parent that the child will inherit</param>
+        /// <param name="parentBirthyear">Birthyear of the parent, used to check that the child isn't older than the parent</param>
+        /// <param name="parentName">The name of the parent, used for interface purposes only</param>
+        /// <returns>The child generated</returns>
         public static Person GenChildPerson(string request, string parentSurname, int parentBirthyear, string parentName)
         {
             Print.PrMsg("Creating child of " + parentName);
@@ -125,7 +104,14 @@ namespace Familjeträd
         }
 
 
-
+        /// <summary>
+        /// Generates a sibling for a person
+        /// </summary>
+        /// <param name="request">Specifies the situation the person is created for</param>
+        /// <param name="siblingSurname">Surname of the parent that the person will inherit</param>
+        /// <param name="parentId">Id for the parents of the siblings, used to check that the child isn't older than the parent</param>
+        /// <param name="siblingName">The name of the sibling, used for interface purposes only</param>
+        /// <returns>The sibling generated</returns>
         public static Person GenSiblingPerson(string request, string siblingSurname, int[] parentId, string siblingName)
         {
             Print.PrMsg("Creating sibling of " + siblingName);
@@ -174,7 +160,16 @@ namespace Familjeträd
         }
 
 
-
+        /// <summary>
+        /// Generates parents for a person
+        /// </summary>
+        /// <param name="request">Specifies the situation the parents are created for</param>
+        /// <param name="personSurname">Surname of the child, is to be inherited by the parents</param>
+        /// <param name="personName">Name of the child, used for interface purposes only</param>
+        /// <param name="personBirthyear">Birthyear of the parent, used to check that the child isn't older than the parent</param>
+        /// <param name="id">Id of the child, used to set the parentId:s for the child</param>
+        /// <param name="siblingIdList">List of siblings, used to assign other children to the parents</param>
+        /// <returns></returns>
         public static Person[] GenParents(string request, string personSurname, string personName, int personBirthyear, int id, List<int> siblingIdList)
         {
             Person[] returnParent = new Person[2];
