@@ -75,6 +75,17 @@ namespace Familjeträd
                 {
                     Print.PrDb();
                 }
+                else if(input == "save")
+                {
+                    ReadWrite.SaveSession();
+                }
+                else if(input == "load")
+                {
+                    if (Input.YesOrNo("Are you sure? All progress will be lost! (yes/no)"))
+                    {
+                        ReadWrite.LoadSession();
+                    }
+                }
                 else if (input.IndexOf(';') == input.Length - 1 && (!string.IsNullOrEmpty(input) || Regex.Replace(input, "[^0-9A-z.()]", "") == input))
                 {
                     string[] inputArr = input.Split('.');

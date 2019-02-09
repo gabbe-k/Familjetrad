@@ -23,7 +23,7 @@ namespace Familjeträd
             while (true)
             {
                 Print.PrMsg("Write a command or a chain of commands, separating them with '.' input '!help' for help", "To execute several commands in a row, separate them with &. Whitespace does not matter.");
-                Print.PrMsg("Use 'printdb' to print out the entire database of people.");
+                Print.PrMsg("Other commands: printdb, load, save");
 
                 string input = Console.ReadLine();
 
@@ -46,9 +46,12 @@ namespace Familjeträd
                     }
                     else
                     {
+
                         foreach (var list in commandList)
                         {
                             Compiler.CompileRequest(list);
+
+                            ReadWrite.SaveLine(list);
                         }
 
                     }

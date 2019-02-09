@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -91,7 +92,7 @@ namespace Familjeträd
                     {
                         //Print.PrMsg("Assigning partner for person " + j + 1 + ", Name: " + tmpPersonList[j].Name);
 
-                        if (Input.YesOrNo("Do you want to pick a partner or create a new one? (Yes/No)"))
+                        if (Input.YesOrNo("Do you want to pick a partner? (Yes/No)"))
                         {
                             Person pickedPartner = Input.PickPerson("Pick a partner for" + tmpPersonList[j].Name);
 
@@ -121,11 +122,11 @@ namespace Familjeträd
 
                 }
 
-            }
+                if (tmpPersonList.Count == 0)
+                {
+                    Print.PrMsg("You did not add any people prior to assigning other family members, did you mean to use 'Add'?");
+                }
 
-            if (tmpPersonList.Count == 0)
-            {
-                Print.PrMsg("You did not add any people prior to assigning other family members, did you mean to use 'Add'?");
             }
         }
     }

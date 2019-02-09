@@ -39,7 +39,7 @@ namespace Familjeträd
             CenterText("Parent 2: " + PersonDB.GetName(person.ParentId[1]));
             for (int j = 0; j < person.SiblingIdList.Count; j++)
             {
-                CenterText("Sibling" + j+1 + ": " + PersonDB.GetName(person.SiblingIdList[j]));
+                CenterText("Sibling" + j + ": " + PersonDB.GetName(person.SiblingIdList[j]));
             }
             CenterText("--------------");
             Console.WriteLine();
